@@ -1,22 +1,31 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Platform } from 'react-native';
+import { useSelector } from 'react-redux';
 
-const TaskDetailsScreen = () => {
+const TaskDetailsScreen = (props) => {
+	const { taskId } = props.route.params;
+
+	const task = useSelector((state) =>
+		state.task.tasks.find((task) => task._id == taskId)
+	);
+
+	console.log(task);
+
 	return (
 		<ScrollView>
 			<View style={styles.container}>
 				<View style={styles.heading}>
-					<Text style={styles.title}>Dummy title</Text>
+					<Text style={styles.title}>{task.title}</Text>
 				</View>
 
 				<View style={styles.group}>
 					<Text style={styles.label}>Course:</Text>
-					<Text style={styles.value}>Web Design</Text>
+					<Text style={styles.value}>{task.course}</Text>
 				</View>
 
 				<View style={styles.group}>
 					<Text style={styles.label}>Description:</Text>
-					<Text style={styles.value}>Some dummy description....</Text>
+					<Text style={styles.value}>{task.descriptio}</Text>
 				</View>
 			</View>
 		</ScrollView>

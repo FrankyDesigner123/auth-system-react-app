@@ -3,7 +3,11 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 const Card = (props) => {
 	return (
-		<TouchableOpacity onPress={() => props.navigation.navigate('TaskDetails')}>
+		<TouchableOpacity
+			onPress={() =>
+				props.navigation.navigate('TaskDetails', { taskId: props.id })
+			}
+		>
 			<View style={styles.card}>
 				<View style={styles.titleContainer}>
 					<Text style={styles.title}>
