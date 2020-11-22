@@ -9,6 +9,13 @@ import {
 	KeyboardAvoidingView,
 } from 'react-native';
 import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const taskValidationSchema = yup.object({
+	title: yup.string().required().min(3).max(50),
+	course: yup.string().required().min(3).max(50),
+	description: yup.string().required().min(3).max(50),
+});
 
 const AddTaskScreen = () => {
 	return (
@@ -27,6 +34,7 @@ const AddTaskScreen = () => {
 					onSubmit={(values) => {
 						console.log(values);
 					}}
+					validationSchema={taskValidationSchema}
 				>
 					{(props) => (
 						<View style={styles.form}>
@@ -35,8 +43,12 @@ const AddTaskScreen = () => {
 								<TextInput
 									style={styles.inputField}
 									onChangeText={props.handleChange('title')}
+									onBlur={props.handleBlur('title')}
 									value={props.values.title}
 								/>
+								<Text style={styles.errorText}>
+									{props.touched.title && props.errors.title}
+								</Text>
 							</View>
 
 							<View style={styles.formGroup}>
@@ -44,8 +56,12 @@ const AddTaskScreen = () => {
 								<TextInput
 									style={styles.inputField}
 									onChangeText={props.handleChange('course')}
+									onBlur={props.handleBlur('course')}
 									value={props.values.course}
 								/>
+								<Text style={styles.errorText}>
+									{props.touched.course && props.errors.course}
+								</Text>
 							</View>
 
 							<View style={styles.formGroup}>
@@ -53,8 +69,12 @@ const AddTaskScreen = () => {
 								<TextInput
 									style={styles.inputField}
 									onChangeText={props.handleChange('description')}
+									onBlur={props.handleBlur('description')}
 									value={props.values.description}
 								/>
+								<Text style={styles.errorText}>
+									{props.touched.desription && props.errors.description}
+								</Text>
 							</View>
 
 							<View style={styles.buttonContainer}>
@@ -89,6 +109,9 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		marginTop: 20,
+	},
+	errorText: {
+		color: 'red',
 	},
 });
 
