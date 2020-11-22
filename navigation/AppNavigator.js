@@ -7,6 +7,8 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import TaskDetailsScreen from '../screens/TaskDetailsScreen';
+import AddTaskScreen from '../screens/AddTaskScreen';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -51,6 +53,16 @@ function HomeNavigator() {
 				name="Home"
 				component={HomeScreen}
 				options={{ title: 'Home', headerLeft: null }}
+			/>
+			<Stack.Screen
+				name="TaskDetails"
+				component={TaskDetailsScreen}
+				options={{ title: 'Task Details' }}
+			/>
+			<Stack.Screen
+				name="AddTask"
+				component={AddTaskScreen}
+				options={{ title: 'Add Task' }}
 			/>
 		</Stack.Navigator>
 	);

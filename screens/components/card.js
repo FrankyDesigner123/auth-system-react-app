@@ -1,20 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-const Card = () => {
+const Card = (props) => {
 	return (
-		<View style={styles.card}>
-			<View style={styles.titleContainer}>
-				<Text style={styles.title}>some dummy title</Text>
-				<View style={styles.course}>
-					<Text style={styles.courseText}>Web Design</Text>
+		<TouchableOpacity onPress={() => props.navigation.navigate('TaskDetails')}>
+			<View style={styles.card}>
+				<View style={styles.titleContainer}>
+					<Text style={styles.title}>some dummy title</Text>
+					<View style={styles.course}>
+						<Text style={styles.courseText}>Web Design</Text>
+					</View>
+				</View>
+
+				<View style={styles.description}>
+					<Text style={styles.descriptionText}>Description</Text>
 				</View>
 			</View>
-
-			<View style={styles.description}>
-				<Text style={styles.descriptionText}>Description</Text>
-			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
