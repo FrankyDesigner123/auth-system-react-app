@@ -14,3 +14,27 @@ export const fetchTasks = () => {
 		});
 	};
 };
+
+export const createTask = ({ title, course, description }) => {
+	return async (dispatch) => {
+		const response = await fetch('http://192.168.1.63:3000/api/tasks/todo', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				title,
+				course,
+				description,
+			}),
+		});
+
+		const responseData = (await response).json();
+		console.log(responseData);
+
+		dispatch({
+			type: CREATE_TASKS,
+			payload: responseData,
+		});
+	};
+};
