@@ -10,6 +10,22 @@ export const registerUser = (authData) => {
 	// dispatch the registerUser function
 	return async (dispatch) => {
 		// logic to make post req to register user
+		const result = await fetch('http://192.168.1.63:3000/api/users/register', {
+			// get the result
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				fullName,
+				email,
+				password,
+				role,
+			}),
+		});
+		// convert result to JSON format
+		const resultData = await result.json();
+		console.log(resultData);
 
 		// return object with type and payload
 		dispatch({
