@@ -15,6 +15,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import * as authAction from '../redux/actions/authAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const formSchema = yup.object({
 	email: yup.string().email().required(),
@@ -35,10 +36,16 @@ const LoginScreen = (navData) => {
 				}}
 				onSubmit={(values) => {
 					dispatch(authAction.loginUser(values))
-						.then((result) => {
+						.then(async (result) => {
 							console.log(result);
 							if (result.success) {
-								navData.navigation.navigate('Home');
+								// store a value
+								try {
+									await AsyncStorage.setItem('token', result.token);
+									navData.navigation.navigate('Home');
+								} catch (err) {
+									console.log(err);
+								}
 							} else {
 								Alert.alert(result.message);
 							}

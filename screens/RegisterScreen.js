@@ -17,6 +17,8 @@ import { useDispatch } from 'react-redux';
 
 import * as authAction from '../redux/actions/authAction';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const formSchema = yup.object({
 	fullName: yup.string().required().min(3),
 	email: yup.string().email().required(),
@@ -41,9 +43,14 @@ const RegisterScreen = (navData) => {
 				}}
 				onSubmit={(values) => {
 					dispatch(authAction.registerUser(values))
-						.then((result) => {
+						.then(async (result) => {
 							if (result.success) {
-								navData.navigation.navigate('Home');
+								try {
+									await AsyncStorage.setItem('token', result.token);
+									navData.navigation.navigate('Home');
+								} catch (err) {
+									console.log(err);
+								}
 							} else {
 								Alert.alert('Registration Failed. Try Again.');
 							}
