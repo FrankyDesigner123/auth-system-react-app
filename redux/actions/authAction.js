@@ -41,6 +41,21 @@ export const loginUser = (authData) => {
 	// dispatch the loginUser function
 	return async (dispatch) => {
 		// logic to make post req to login user
+		const result = await fetch('http://192.168.1.63:3000/api/users/login', {
+			// get the result
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email,
+				password,
+			}),
+		});
+
+		// convert result to JSON format
+		const resultData = await result.json();
+		console.log(resultData);
 
 		// return object with type and payload
 		dispatch({
