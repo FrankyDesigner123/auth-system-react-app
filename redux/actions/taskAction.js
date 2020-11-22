@@ -4,10 +4,13 @@ export const CREATE_TASKS = 'CREATE_TASKS';
 export const fetchTasks = () => {
 	return async (dispatch) => {
 		// add logic to fetch tasks from API
+		const result = await fetch('http://192.168.1.63:3000/api/tasks/');
+		// convert result to json
+		const resultData = await result.json();
 
 		dispatch({
 			type: FETCH_TASKS,
-			payload: 1,
+			payload: resultData,
 		});
 	};
 };
