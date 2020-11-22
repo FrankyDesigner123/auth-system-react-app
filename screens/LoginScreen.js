@@ -55,7 +55,7 @@ const LoginScreen = (navData) => {
 								// store a value
 								try {
 									await AsyncStorage.setItem('token', result.token);
-									navData.navigation.navigate('Home');
+									navData.navigation.navigate('Application');
 								} catch (err) {
 									console.log(err);
 								}
