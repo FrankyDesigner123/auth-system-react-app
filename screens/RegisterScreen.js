@@ -8,12 +8,23 @@ import {
 	Image,
 	TextInput,
 	TouchableOpacity,
+	Platform,
 } from 'react-native';
 import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const formSchema = yup.object({
+	fullName: yup.string().required().min(3),
+	email: yup.string().email().required(),
+	password: yup.string().required().min(6),
+});
 
 const RegisterScreen = (navData) => {
 	return (
-		<KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+		<KeyboardAvoidingView
+			behavior={Platform === 'ios' ? 'padding' : 'height'}
+			style={{ flex: 1 }}
+		>
 			<Formik
 				initialValues={{
 					fullName: '',
@@ -25,6 +36,7 @@ const RegisterScreen = (navData) => {
 					console.log(values);
 					navData.navigation.navigate('Home');
 				}}
+				validationSchema={formSchema}
 			>
 				{(props) => (
 					<View style={styles.container}>
@@ -42,7 +54,11 @@ const RegisterScreen = (navData) => {
 								placeholderTextColor="#fff"
 								onChangeText={props.handleChange('fullName')}
 								value={props.values.fullName}
+								onBlur={props.handleBlur('fullName')}
 							/>
+							<Text style={styles.errorText}>
+								{props.touched.fullName && props.errors.fullName}
+							</Text>
 							<TextInput
 								style={styles.input}
 								placeholder="Email"
@@ -50,7 +66,11 @@ const RegisterScreen = (navData) => {
 								keyboardType="email-address"
 								onChangeText={props.handleChange('email')}
 								value={props.values.email}
+								onBlur={props.handleBlur('email')}
 							/>
+							<Text style={styles.errorText}>
+								{props.touched.email && props.errors.email}
+							</Text>
 							<TextInput
 								style={styles.input}
 								placeholder="Password"
@@ -58,8 +78,11 @@ const RegisterScreen = (navData) => {
 								secureTextEntry={true}
 								onChangeText={props.handleChange('password')}
 								value={props.values.password}
+								onBlur={props.handleBlur('password')}
 							/>
-
+							<Text style={styles.errorText}>
+								{props.touched.password && props.errors.password}
+							</Text>
 							<TouchableOpacity
 								style={styles.button}
 								onPress={props.handleSubmit}
@@ -133,6 +156,9 @@ const styles = StyleSheet.create({
 		color: '#738289',
 		fontSize: 16,
 		fontWeight: 'bold',
+	},
+	errorText: {
+		color: 'red',
 	},
 });
 
