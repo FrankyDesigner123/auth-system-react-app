@@ -25,13 +25,21 @@ export const registerUser = (authData) => {
 		});
 		// convert result to JSON format
 		const resultData = await result.json();
-		console.log(resultData);
 
-		// return object with type and payload
-		dispatch({
-			type: REGISTER_USER_SUCCESS,
-			payload: 1,
-		});
+		// logic if result is true
+		if (resultData.success) {
+			// return object with type and payload
+			dispatch({
+				type: REGISTER_USER_SUCCESS,
+				payload: resultData,
+			});
+		} else {
+			dispatch({
+				type: REGISTER_USER_FAIL,
+			});
+		}
+
+		return resultData;
 	};
 };
 
@@ -57,10 +65,19 @@ export const loginUser = (authData) => {
 		const resultData = await result.json();
 		console.log(resultData);
 
-		// return object with type and payload
-		dispatch({
-			type: LOGIN_USER_SUCCESS,
-			payload: 1,
-		});
+		// logic if result is true
+		if (resultData.success) {
+			// return object with type and payload
+			dispatch({
+				type: LOGIN_USER_SUCCESS,
+				payload: resultData,
+			});
+		} else {
+			dispatch({
+				type: LOGIN_USER_FAIL,
+			});
+		}
+
+		return resultData;
 	};
 };
