@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	Platform,
 	Alert,
+	ActivityIndicator,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -26,6 +27,14 @@ const formSchema = yup.object({
 });
 
 const RegisterScreen = (navData) => {
+	const [isLoading, setIsLoading] = useState(false);
+	if (isLoading) {
+		return (
+			<View style={styles.centered}>
+				<ActivityIndicator size="large" />
+			</View>
+		);
+	}
 	// init useDispatch
 	const dispatch = useDispatch();
 
@@ -42,8 +51,11 @@ const RegisterScreen = (navData) => {
 					role: '',
 				}}
 				onSubmit={(values) => {
+					// load spinner
+					setIsLoading(true);
 					dispatch(authAction.registerUser(values))
 						.then(async (result) => {
+							setIsLoading(false);
 							if (result.success) {
 								try {
 									await AsyncStorage.setItem('token', result.token);
@@ -52,6 +64,7 @@ const RegisterScreen = (navData) => {
 									console.log(err);
 								}
 							} else {
+								setIsLoading(false);
 								Alert.alert('Registration Failed. Try Again.');
 							}
 						})
@@ -180,6 +193,11 @@ const styles = StyleSheet.create({
 	},
 	errorText: {
 		color: 'red',
+	},
+	centered: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
 

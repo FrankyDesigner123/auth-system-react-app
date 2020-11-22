@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	Platform,
 	Alert,
+	ActivityIndicator,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -23,6 +24,15 @@ const formSchema = yup.object({
 });
 
 const LoginScreen = (navData) => {
+	const [isLoading, setIsLoading] = useState(false);
+	if (isLoading) {
+		return (
+			<View style={styles.centered}>
+				<ActivityIndicator size="large" />
+			</View>
+		);
+	}
+
 	const dispatch = useDispatch();
 	return (
 		<KeyboardAvoidingView
@@ -35,8 +45,11 @@ const LoginScreen = (navData) => {
 					password: '',
 				}}
 				onSubmit={(values) => {
+					// load spinner
+					setIsLoading(true);
 					dispatch(authAction.loginUser(values))
 						.then(async (result) => {
+							setIsLoading(false);
 							console.log(result);
 							if (result.success) {
 								// store a value
@@ -47,6 +60,7 @@ const LoginScreen = (navData) => {
 									console.log(err);
 								}
 							} else {
+								setIsLoading(false);
 								Alert.alert(result.message);
 							}
 						})
@@ -165,6 +179,11 @@ const styles = StyleSheet.create({
 	},
 	errorText: {
 		color: 'red',
+	},
+	centered: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
 

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import {
+	StyleSheet,
+	View,
+	Text,
+	Button,
+	ActivityIndicator,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const jwtDecode = require('jwt-decode');
@@ -36,6 +42,15 @@ const HomeScreen = (props) => {
 		loadProfile();
 	});
 
+	const [isLoading, setIsLoading] = useState(false);
+	if (isLoading) {
+		return (
+			<View style={styles.centered}>
+				<ActivityIndicator size="large" />
+			</View>
+		);
+	}
+
 	return (
 		<View style={styles.container}>
 			<View>
@@ -54,6 +69,7 @@ const HomeScreen = (props) => {
 				<Button
 					title="Log out"
 					onPress={() => {
+						setIsLoading(true);
 						logout(props);
 					}}
 				/>
@@ -69,6 +85,11 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: 22,
+	},
+	centered: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
 
