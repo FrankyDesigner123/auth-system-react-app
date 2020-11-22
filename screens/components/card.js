@@ -6,14 +6,18 @@ const Card = (props) => {
 		<TouchableOpacity onPress={() => props.navigation.navigate('TaskDetails')}>
 			<View style={styles.card}>
 				<View style={styles.titleContainer}>
-					<Text style={styles.title}>some dummy title</Text>
+					<Text style={styles.title}>
+						{props.title.length > 40
+							? props.title.slice(0, 40) + ' ...'
+							: props.title}
+					</Text>
 					<View style={styles.course}>
-						<Text style={styles.courseText}>Web Design</Text>
+						<Text style={styles.courseText}>{props.course}</Text>
 					</View>
 				</View>
 
 				<View style={styles.description}>
-					<Text style={styles.descriptionText}>Description</Text>
+					<Text style={styles.descriptionText}>{props.description}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>
