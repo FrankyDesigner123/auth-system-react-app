@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
 		case CREATE_TASKS:
 			return {
 				...state,
-				tasks: state.tasks.concat(action.payload),
+				tasks: state.tasks.concat(action.payload.data),
 			};
 	}
 	return state;

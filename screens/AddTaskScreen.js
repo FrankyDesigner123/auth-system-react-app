@@ -7,9 +7,12 @@ import {
 	TextInput,
 	Button,
 	KeyboardAvoidingView,
+	Alert,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import * as taskAction from '../redux/actions/taskAction';
 
 const taskValidationSchema = yup.object({
 	title: yup.string().required().min(3).max(50),
@@ -18,6 +21,8 @@ const taskValidationSchema = yup.object({
 });
 
 const AddTaskScreen = () => {
+	const dispatch = useDispatch();
+
 	return (
 		<KeyboardAvoidingView
 			behavior="padding"
@@ -33,6 +38,13 @@ const AddTaskScreen = () => {
 					}}
 					onSubmit={(values) => {
 						console.log(values);
+						dispatch(taskAction.createTask(values))
+							.then(() => {
+								Alert.alert('Task created succesfully.');
+							})
+							.catch(() => {
+								Alert.alert('An error occurred. Try Again', [{ text: 'OK' }]);
+							});
 					}}
 					validationSchema={taskValidationSchema}
 				>

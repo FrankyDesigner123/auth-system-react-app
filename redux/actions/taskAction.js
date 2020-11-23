@@ -29,8 +29,7 @@ export const createTask = ({ title, course, description }) => {
 			}),
 		});
 
-		const responseData = (await response).json();
-		console.log(responseData);
+		const responseData = await response.json();
 
 		dispatch({
 			type: CREATE_TASKS,

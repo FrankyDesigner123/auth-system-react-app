@@ -25,7 +25,7 @@ const TaskDetailsScreen = (props) => {
 
 				<View style={styles.group}>
 					<Text style={styles.label}>Description:</Text>
-					<Text style={styles.value}>{task.descriptio}</Text>
+					<Text style={styles.value}>{task.description}</Text>
 				</View>
 			</View>
 		</ScrollView>
